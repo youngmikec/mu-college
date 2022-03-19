@@ -1,0 +1,20 @@
+// $btn-color: #dddbdc;
+// $btn-disabled-color: #eeeeee;
+$btn-color: #e91e63;
+$btn-disabled-color: #fd77a4;
+$white-color: #ffffff;
+
+.page-btn {
+    margin: auto 0.3rem;
+    padding: 0.25rem 0.31rem;
+    border-radius: 5px;
+}
+.active {
+    background-color:  $btn-color;
+    color: $white-color;
+}
+
+.disable {
+    background-color:  $btn-disabled-color;
+    color: $white-color;
+}

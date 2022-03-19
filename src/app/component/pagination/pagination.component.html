@@ -1,0 +1,33 @@
+<div class="">
+    <span class="page-btn" 
+    *ngIf="paginationLabel?.showLabel === true || paginationLabel?.showIcon === true"
+    (click)="previous()"
+    >
+        <span *ngIf="paginationLabel?.showIcon">
+            <i [class]="paginationLabel.prevIcon" aria-hidden="true"></i>
+        </span>
+        <span *ngIf="paginationLabel?.showLabel">
+            {{ paginationLabel?.prev }}
+        </span>
+    </span>
+
+    <span class="page-btn" 
+    *ngFor="let page of pages"
+    [ngClass]="{
+        'active': page === currentPage,
+        'disable': page != currentPage
+     }"
+    >{{ page }}</span>
+
+    <span class="page-btn" 
+    *ngIf="paginationLabel?.showLabel === true || paginationLabel?.showIcon === true"
+    (click)="next()"
+    >
+        <span *ngIf="paginationLabel?.showLabel">
+            {{ paginationLabel?.next }}
+        </span>
+        <span *ngIf="paginationLabel?.showIcon">
+            <i [class]="paginationLabel.nextIcon" aria-hidden="true"></i>
+        </span>
+    </span>
+</div>

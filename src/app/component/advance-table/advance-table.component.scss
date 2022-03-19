@@ -1,0 +1,21 @@
+.pull-right {
+    text-align: right;
+}
+
+.pull-left {
+    text-align: left; 
+}
+
+input {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    &:focus {
+        border: 1px solid rgb(163, 163, 163);
+    }
+}
+table {
+    font-size: 0.75rem;
+}
+// .table-responsive {
+//     overflow-x: unset;
+// }
