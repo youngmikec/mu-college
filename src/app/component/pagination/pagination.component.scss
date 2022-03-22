@@ -1,8 +1,8 @@
 // $btn-color: #dddbdc;
 // $btn-disabled-color: #eeeeee;
-$btn-color: #e91e63;
+$btn-color: #C7D2EA;
 $btn-disabled-color: #fd77a4;
-$white-color: #ffffff;
+$text-color: #00297D;
 
 .page-btn {
     margin: auto 0.3rem;
@@ -11,10 +11,10 @@ $white-color: #ffffff;
 }
 .active {
     background-color:  $btn-color;
-    color: $white-color;
+    color: $text-color;
 }
 
 .disable {
-    background-color:  $btn-disabled-color;
-    color: $white-color;
+    background-color:  transparent;
+    color: $text-color;
 }

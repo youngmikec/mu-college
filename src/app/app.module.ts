@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
+
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,7 +28,13 @@ import {
   UploadModalService,
   SidebarService,
   TableService, 
+  DEFAULT_TIMEOUT,
+  ErrorInterceptor,
+  JwtInterceptor,
+  TimeoutInterceptor,
 } from './services';
+
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -31,7 +42,8 @@ import {
     AdminLayoutComponent,
   ],
   imports: [
-    // BrowserModule,
+    BrowserModule,
+    ApolloModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -59,6 +71,24 @@ import {
     UploadModalService,
     SidebarService,
     TableService,
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: `${environment.CURRENT_URL}/graphql`
+          })
+        };
+      },
+      deps: [HttpLink],
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
+    [{ provide: DEFAULT_TIMEOUT, useValue: 30000 }],
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

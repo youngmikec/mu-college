@@ -42,12 +42,40 @@ export class LoginComponent implements OnInit {
     // currentElm.addClass('running');
     if(this.addForm?.valid){
       console.log('got here')
-      await this.authService.postLogin(payload, '')
+      this.authService.postLogin(payload, '').subscribe({
+        complete: () => {
+          this.loading = false;
+        },
+        next: (res: any) => {
+          if(res.data){
+            this.loading = false;
+            this.showNotification(`Login successful<br/>Welcome! Maduka University College Dashboard`);
+          }else{
+            this.loading = false;
+            this.showNotification(res.errors[0].message);
+          }
+        },
+        error: (error: any) => {
+          this.loading = false;
+          this.showNotification(error);
+        }
+      })
+      
+      
     }else {
       console.log('form is invalild')
       // this.addForm?.controls.email.markAsTouched();
       // this.addForm?.controls.password.markAsTouched();
     }
+  }
+
+  showNotification(message: string | undefined) {
+    this.toastr.show(`<span class="fa ui-1_bell-53"></span> <b>${message}</b>`, '', {
+      timeOut: 8000,
+      closeButton: true,
+      enableHtml: true,
+      toastClass: 'alert alert-primary alert-with-icon',
+    });
   }
 
 }

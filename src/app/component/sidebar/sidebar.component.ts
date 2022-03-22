@@ -1,13 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
 
 import { Component, OnInit } from '@angular/core';
 // import { AuthService } from '../../services';
@@ -32,7 +22,7 @@ export const ROUTES: RouteInfo[] = [
   },
 
   {
-    path: '/admin/package', title: 'Staff', icon: 'ui-1_email-85', class: 'parent-nav',
+    path: '/staff/', title: 'Staff', icon: 'ui-1_email-85', class: 'parent-nav',
     sub: [
       { path: '/crm/mail', title: 'Mail', icon: 'users_single-02', class: '' },
     ]

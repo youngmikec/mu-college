@@ -6,11 +6,11 @@ import { DATASET } from '../../helpers';
 import { TableAction, HeaderObject } from '../../models';
 
 @Component({
-  selector: 'app-admission',
-  templateUrl: './admission.component.html',
-  styleUrls: ['./admission.component.scss']
+  selector: 'app-staff',
+  templateUrl: './staff.component.html',
+  styleUrls: ['./staff.component.scss']
 })
-export class AdmissionComponent implements OnInit {
+export class StaffComponent implements OnInit {
 
   formType: string = '';
   currentRecord: any;

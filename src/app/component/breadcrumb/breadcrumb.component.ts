@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -13,12 +14,18 @@ export class BreadcrumbComponent implements OnInit {
 
   constructor(
     private router: Router,
-  ) {
+    ) {
+    this.router.events.pipe(
+      filter((event: any) => event instanceof NavigationEnd)
+      ).subscribe({
+        next: (res: NavigationEnd) => {
+          this.urlPath = res?.url;
+          this.currentPage = this.getCurrentPage(this.urlPath);
+      }
+    })
   }
   
   ngOnInit(): void {
-    this.urlPath = this.router.url;
-    this.currentPage = this.getCurrentPage(this.urlPath);
   }
 
   getCurrentPage(url: string): string | undefined{

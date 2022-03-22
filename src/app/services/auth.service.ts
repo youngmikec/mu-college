@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import { User } from '../models';
 import { EnvService } from './env.service';
-// import { LoginResponse, User } from '../models';
 import { getLocalStorage, setLocalStorage, removeLocalStorage, cleanObject } from '../helpers';
 
 @Injectable({
@@ -13,12 +16,26 @@ import { getLocalStorage, setLocalStorage, removeLocalStorage, cleanObject } fro
 
 export class AuthService {
   isLoggedIn = false;
-  token: string | null = null;
+  token = null;
   depth = 0;
-  // user: User;
-  user: any;
+  user: User;
+  LOGIN_POST_MUTATION = gql`
+    mutation Login($data: LoginInput!){
+      login(data: $data){
+        accessToken
+        user{
+          id
+          email
+          phone
+        }
+      }
+    }
+  `;
 
-  constructor(private http: HttpClient,
+
+  constructor(
+    private apollo: Apollo,
+    private http: HttpClient,
     private router: Router,
     private toastr: ToastrService,
     private env: EnvService) {
@@ -27,46 +44,53 @@ export class AuthService {
   }
 
   // async postLogin(data: {[keys: string]: string | any}, element: any): Promise<LoginResponse> {
-  async postLogin(data: {[keys: string]: string | any}, element: any): Promise<any> {
-    const payload = cleanObject(data);
+  postLogin(loginData: {[keys: string]: string | any}, element: any): Observable<any> {
+    const payload = cleanObject(loginData);
     // console.log('auth.service: payload =>', payload, this.env.API_URL + '/admin/login');
-    const response = this.http.post(this.env.API_URL + '/admin/login', payload)
-      // .pipe(tap((res: LoginResponse) => {
-      .pipe(tap((res: any) => {
-        element.removeClass('running');
-        //  console.log('auth.service: res =>', res);
-        if (res.success) {
-          this.showNotification(`${res.message}l<br/>Welcome! FreexitNow`);
-          const { user, token } = res.payload;
-          this.user = user;
-          this.token = token;
-          if (setLocalStorage('user', user, null)) {
-            //  console.log('User info stored');
-          } else {
-            console.error('Error storing record customer');
-          }
-          if (setLocalStorage('token', token, null)) {
-            //   console.log('Token string stored');
-          } else {
-            console.error('Error storing record token');
-          }
-          const goingTo = payload.otp ? '/forgot-password' : '/dashboard';
-          this.isLoggedIn = true;
-          // const intendURL = getLocalStorage('intendURL') === null ? goingTo : getLocalStorage('intendURL');
-          this.router.navigate([goingTo]);
-        } else {
-          this.showNotification(res.message);
-          this.token = null;
-          this.isLoggedIn = false;
+    const login = this.apollo.mutate({
+      mutation: this.LOGIN_POST_MUTATION,
+      variables: {
+        data: {
+          email: loginData.email,
+          password: loginData.password
         }
-      }, (err) => {
-        element.removeClass('running');
-        // this.showNotification('Error processing. Check your Internet and Try Again');
-        this.showNotification(`${err}`);
-        this.token = null;
-        this.isLoggedIn = false;
-      }));
-    return await response.toPromise();
+      }
+    }).pipe(
+      tap((res: any) => {
+            if (res.data) {
+              const loginResponse = Object.assign({ login: { accessToken: "", user: null }}, res.data);
+              this.token = loginResponse.login.accessToken;
+              this.user = loginResponse.login.user;
+              this.isLoggedIn = true;
+              // this.showNotification(`Login successful<br/>Welcome! Maduka University College Dashboard`);
+              if (!setLocalStorage('token', this.token, null)) {
+                console.error('Error storing record token');
+              }
+              if (!setLocalStorage('user', this.user, null)) {
+                console.error('Error storing record user');
+              }
+              return res;
+            }else{
+              this.showNotification(res.errors[0].message);
+              return res;
+            }
+
+      })
+    );
+    return login;
+    // .subscribe({
+    //   next: (res: any) => {
+    //   },
+    //   error: (error: any) => {
+    //     if(error) {
+    //       element.removeClass('running');
+    //       this.showNotification(error.message);
+    //       this.token = null;
+    //       this.isLoggedIn = false;
+    //     }
+    //   } 
+    // });
+
   }
 
 

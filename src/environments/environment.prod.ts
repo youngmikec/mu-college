@@ -1,9 +1,7 @@
 export const environment = {
   production: true,
-  CURRENT_URL: 'https://dev.freexitnow.com/api',
-  // GEOCODE_URL: 'http://api.positionstack.com/v1/forward?access_key=b408afada2448b6a284a157fed590d54',
+  CURRENT_URL: 'https://dev.madukauniversity.ng',
   GEOCODE_URL: 'http://www.mapquestapi.com/geocoding/v1/address?key=BAaW4AMryTj4jnU7EG64aM1uQVRqfbp9',
-  // GEO_KEY: 'b408afada2448b6a284a157fed590d54',
   MAPQUEST_KEY: 'KiQNd0lmIWGmm4MU',
   PAYSTACK_KEY: 'pk_live_ed8e974fa890b18588163bcc516bddfbd75d6541',
   PAYSTACK_SECRET_KEY: 'sk_live_6563410031cda4ec588de1737498cc6ba1c3cfd0',

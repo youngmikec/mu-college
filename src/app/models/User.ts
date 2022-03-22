@@ -1,8 +1,11 @@
+import { AccountStatus, Gender, UserType } from "./enums";
+import { PrimaryStudent, SecondaryStudent, UniversityStudent } from "./index";
+
 export interface User {
     id?:             string;
     _id?:            string;
     // accountStatus?:                AccountStatus
-    accountStatus?:                "ACTIVATED" | "BLOCKED" | "DEACTIVATED" | "DELETED" | "PENDING";
+    accountStatus?:                AccountStatus;
     address?:                      any;   // Location
     avatar?:                       string;
     bio?:                          string;
@@ -32,7 +35,7 @@ export interface User {
     facebookUrl?:                  string;
     // fileItems?: [FileItem]
     fileItems?:                    Array<any>;
-    gender?:                       "MALE" | "FEMALE" | "OTHER";
+    gender?:                       Gender;
     givenNames?:                   string;
     height?:                       number;
     industry?:                     string;
@@ -53,8 +56,7 @@ export interface User {
     phoneVerified?:                boolean;    
     // posts?: [Post]
     posts?:                        Array<any>;
-    primaryStudent?:               any;
-    // primaryStudent?: PrimaryStudent
+    primaryStudent?:               PrimaryStudent;
     profession?:                   string;
     profileVerified?:              boolean;    
     provider?:                     string;
@@ -63,8 +65,7 @@ export interface User {
     restorePasswordCode?:          string;
     roles?:                        string;
     salt?:                         string;
-    secondaryStudent?:             any;
-    // secondaryStudent?: SecondaryStudent
+    secondaryStudent?:             SecondaryStudent;
     siteUrl?:                      string;
     skills?:                       Array<string>;
     sponsorAsDependent?:           any;
@@ -74,10 +75,9 @@ export interface User {
     surname?:                      string;
     title?:                        string;
     twitterUrl?:                   string;
-    type?:                         "APPLICANT" | "CANDIDATE" | "EMPLOYEE" | "SPONSOR" | "STUDENT";
+    type?:                         UserType;
     unionStatus?:                  string;
-    // universityStudent?: UniversityStudent
-    universityStudent?:            any;
+    universityStudent?:            UniversityStudent;
     updatedAt?:                    Date;
     updatedBy?:                    string;
     visibleToInstitution?:         boolean;    
@@ -92,7 +92,7 @@ export class User {
     id?:             string;
     _id?:            string;
     // accountStatus?:                AccountStatus
-    accountStatus?:                "ACTIVATED" | "BLOCKED" | "DEACTIVATED" | "DELETED" | "PENDING";
+    accountStatus?:                AccountStatus;
     address?:                      any;   // Location
     avatar?:                       string;
     bio?:                          string;
@@ -122,7 +122,7 @@ export class User {
     facebookUrl?:                  string;
     // fileItems?: [FileItem]
     fileItems?:                    Array<any>;
-    gender?:                       "MALE" | "FEMALE" | "OTHER";
+    gender?:                       Gender;
     givenNames?:                   string;
     height?:                       number;
     industry?:                     string;
@@ -143,8 +143,7 @@ export class User {
     phoneVerified?:                boolean;    
     // posts?: [Post]
     posts?:                        Array<any>;
-    primaryStudent?:               any;
-    // primaryStudent?: PrimaryStudent
+    primaryStudent?:               PrimaryStudent;
     profession?:                   string;
     profileVerified?:              boolean;    
     provider?:                     string;
@@ -153,8 +152,7 @@ export class User {
     restorePasswordCode?:          string;
     roles?:                        string;
     salt?:                         string;
-    secondaryStudent?:             any;
-    // secondaryStudent?: SecondaryStudent
+    secondaryStudent?:             SecondaryStudent;
     siteUrl?:                      string;
     skills?:                       Array<string>;
     sponsorAsDependent?:           any;
@@ -164,10 +162,9 @@ export class User {
     surname?:                      string;
     title?:                        string;
     twitterUrl?:                   string;
-    type?:                         "APPLICANT" | "CANDIDATE" | "EMPLOYEE" | "SPONSOR" | "STUDENT";
+    type?:                         UserType;
     unionStatus?:                  string;
-    // universityStudent?: UniversityStudent
-    universityStudent?:            any;
+    universityStudent?:            UniversityStudent;
     updatedAt?:                    Date;
     updatedBy?:                    string;
     visibleToInstitution?:         boolean;    

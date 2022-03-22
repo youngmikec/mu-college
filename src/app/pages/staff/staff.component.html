@@ -5,7 +5,7 @@
           <div class="row">
             <div class="col-lg-6 col-7">
               <button class="btn btn-primary mb-2 me-2 flex-1" (click)="openModal('lg', 'create', content)">Add New</button>
-              <h6 style="font-weight: 600;">Student Application Records</h6>
+              <h6 style="font-weight: 600;">Staff Application Records</h6>
               <!-- <p class="text-sm mb-0">
                 <i class="fa fa-check text-info" aria-hidden="true"></i>
                 <span class="font-weight-bold ms-1">30 done</span> this month
@@ -36,12 +36,12 @@
 
 <ng-template #content let-modal>
   <div class="modal-header container">
-    <h4 class="modal-title">Admission Form Modal</h4>
+    <h4 class="modal-title">Staff Application Modal</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
   </div>
   <div class="modal-body">
     <!-- Modal body goes in here -->
-    <app-admission-mutate></app-admission-mutate>
+    <!-- <app-admission-mutate></app-admission-mutate> -->
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
